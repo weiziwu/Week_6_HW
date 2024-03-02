@@ -1,0 +1,68 @@
+---
+title: "Week_6_HW"
+author: Weizi Wu
+format: pdf
+editor: visual
+---
+
+## Week6_HW
+
+1.  What purpose to Makefile serve?
+
+    Data clean up, data gathering, or files merging
+
+2.  What is the function to download a URL?
+
+    import() or read.table if easily accessible
+
+3.  What is a .zip file?
+
+    Compressed files
+
+4.  What is the process to download and decompress a .zip file? Give an example in a R code chunk.
+
+    a\. Specify the URL of the .zip file and the destination folder
+
+    b\. Create a temporary file called 'temp'
+
+    c\. Download the compressed file into the temporary file
+
+    d\. Decompress the file and convert it into a data frame
+
+    e\. Delete the temporary file
+
+```{r zip}
+#specify the URL
+URL <- paste0("http://www.unified-democracy-scores.org/", "files/20140312/z/uds_summary.csv.gz")
+#create temporary file
+temp <- tempfile()
+download.file(URL, temp)
+##Decompress the file
+uds_data <- read.csv(gzfile(temp, "uds_summary.csv"))
+##Delete the temp
+unlink(temp)
+```
+
+5.  What are APIs?
+
+    Application Programming Interfaces
+
+6.  Use WDI package to download a new dataset other than AG.CON.FERT.ZS
+
+    ```{r WDI, echo=FALSE}
+    #Load WDI package
+    library(WDI)
+    # Search World Bank for fertilizer consumption data
+    WDIsearch("fertilizer consumption")
+    fert_cons_data <- WDI(indicator = "AG.CON.FERT.PT.ZS",
+    start = 2012, end = 2022)
+    head(fert_cons_data)
+    ```
+
+7.  Indicate 3 new things you learned from this week.
+
+a. I learned to extract data from public website
+
+b. I learned API and related package---WDI
+
+c. I leanred to download zip files with URLs
